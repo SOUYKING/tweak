@@ -1,3 +1,14 @@
+<#
+.SYNOPSIS
+    This script applies tweaks to your Windows settings.
+.DESCRIPTION
+    This script applies various tweaks to your Windows settings, including enabling dark mode, disabling mouse acceleration,
+    and enabling num lock on startup. It prompts the user for confirmation before applying the tweaks.
+.NOTES
+    Author: Your Name
+    Date: April 2024
+#>
+
 # Prompt the user to confirm before applying tweaks
 Write-Host "This script will tweak your Windows settings. Are you sure you want to continue?" -ForegroundColor Yellow
 $confirmation = Read-Host "Type 'yes' to continue, or anything else to cancel."
@@ -9,25 +20,6 @@ if ($confirmation -eq "yes") {
         MouseAccelerationEnabled = $false
         NumLockEnabled = $true
         # Add more tweaks as needed
-    }
-
-    # Apply tweaks
-    foreach ($tweakName in $Tweaks.Keys) {
-        switch ($tweakName) {
-            "DarkModeEnabled" {
-                Invoke-WinUtilDarkMode -DarkMoveEnabled $Tweaks[$tweakName]
-            }
-            "MouseAccelerationEnabled" {
-                Invoke-WinUtilMouseAcceleration -MouseAccelerationEnabled $Tweaks[$tweakName]
-            }
-            "NumLockEnabled" {
-                Invoke-WinUtilNumLock -Enabled $Tweaks[$tweakName]
-            }
-            # Add more cases for additional tweaks
-            Default {
-                Write-Warning "Unknown tweak: $tweakName"
-            }
-        }
     }
 
     # Function to enable/disable Dark Mode
@@ -91,7 +83,24 @@ if ($confirmation -eq "yes") {
         }
     }
 
-    # Add more tweak functions as needed
+    # Apply tweaks
+    foreach ($tweakName in $Tweaks.Keys) {
+        switch ($tweakName) {
+            "DarkModeEnabled" {
+                Invoke-WinUtilDarkMode -DarkMoveEnabled $Tweaks[$tweakName]
+            }
+            "MouseAccelerationEnabled" {
+                Invoke-WinUtilMouseAcceleration -MouseAccelerationEnabled $Tweaks[$tweakName]
+            }
+            "NumLockEnabled" {
+                Invoke-WinUtilNumLock -Enabled $Tweaks[$tweakName]
+            }
+            # Add more cases for additional tweaks
+            Default {
+                Write-Warning "Unknown tweak: $tweakName"
+            }
+        }
+    }
 } else {
     Write-Host "Operation canceled. No changes were made." -ForegroundColor Yellow
 }
